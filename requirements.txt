@@ -1,0 +1,6 @@
+aiogram==2.15
+aiohttp==3.7.4.post0
+aioredis==2.0.0
+python-dotenv
+sqlalchemy==1.4.25
+PyMySQL==1.0.2
