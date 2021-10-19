@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="955b2631-8201-4167-8072-181d3bb5bb4c" name="Default Changelist" comment="" />
+    <list default="true" id="955b2631-8201-4167-8072-181d3bb5bb4c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/edit_storage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/new_product_states.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/callback_datas.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/new_product_select_category.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/show_storage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/keyboards/inline/order_management_buttons/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/states/admin_panel/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/states/admin_panel/edit_storage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Prezerve.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Prezerve.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/order_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/order_management.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/inline/callback_datas.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/inline/order_management_buttons/callback_datas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/inline/order_managment_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/inline/order_management_buttons/order_managment_buttons.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/db_api/sqlalchemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/db_api/sqlalchemy.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +34,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -23,6 +46,7 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1zaaBcaHje3U3gRxFjBMjsmMG9E" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -34,10 +58,55 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\Prezerve\Prezerve\handlers\users\admin_panel\menu_commands\edit_storage" />
+      <recent name="D:\Programming\Prezerve\Prezerve\keyboards\inline\order_management_buttons" />
+      <recent name="D:\Programming\Prezerve\Prezerve\keyboards\inline\edit_storage_buttons" />
       <recent name="D:\Programming\Prezerve\handlers\users\admin_panel\menu_commands" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app">
+    <configuration name="Prezerve" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Prezerve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Prezerve" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Prezerve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Prezerve" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Prezerve/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Prezerve" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -101,9 +170,41 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="photo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Prezerve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../python/SQLalchemy" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../python/SQLalchemy/photo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.Prezerve" />
+      <item itemvalue="Python.app (1)" />
+      <item itemvalue="Python.app" />
+      <item itemvalue="Python.loader" />
+      <item itemvalue="Python.photo" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.photo" />
+        <item itemvalue="Python.Prezerve" />
+        <item itemvalue="Python.app (1)" />
         <item itemvalue="Python.loader" />
       </list>
     </recent_temporary>
@@ -118,5 +219,17 @@
       <updated>1634388517550</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

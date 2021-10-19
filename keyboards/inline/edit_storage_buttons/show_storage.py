@@ -1,5 +1,5 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from keyboards.inline.callback_datas import edit_storage_callback
+from .callback_datas import edit_storage_callback
 from utils.db_api.sqlalchemy import engine, storage
 
 conn = engine.connect()

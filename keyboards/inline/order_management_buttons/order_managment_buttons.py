@@ -1,6 +1,5 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
-from keyboards.inline.callback_datas import order_management_callback
+from .callback_datas import order_management_callback
 
 order_management = InlineKeyboardMarkup(row_width=2, inline_keyboard=[
     [
@@ -31,7 +30,3 @@ order_management = InlineKeyboardMarkup(row_width=2, inline_keyboard=[
         )
     ]
 ])
-
-
-
-

@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.types import CallbackQuery
 
-from keyboards.inline.callback_datas import order_management_callback
-from keyboards.inline.order_managment_buttons import order_management
+from keyboards.inline.order_management_buttons.callback_datas import order_management_callback
+from keyboards.inline.order_management_buttons.order_managment_buttons import order_management
 from loader import dp
 
 
