@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="955b2631-8201-4167-8072-181d3bb5bb4c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/edit_storage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/new_product_states.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/callback_datas.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/new_product_select_category.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/show_storage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/keyboards/inline/order_management_buttons/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/states/admin_panel/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/states/admin_panel/edit_storage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Prezerve.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Prezerve.iml" afterDir="false" />
+    <list default="true" id="955b2631-8201-4167-8072-181d3bb5bb4c" name="Default Changelist" comment="Целый день ебался со скачиванием фотки...">
+      <change afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/edit_product.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/edit_product.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/states/admin_panel/edit_storage/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/states/admin_panel/edit_storage/own_value_state.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/db_api/select_storage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.dist" beforeDir="false" afterPath="$PROJECT_DIR$/.env.dist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/order_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/order_management.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/inline/callback_datas.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/inline/order_management_buttons/callback_datas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/inline/order_managment_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/inline/order_management_buttons/order_managment_buttons.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/db_api/sqlalchemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/db_api/sqlalchemy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/edit_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/edit_storage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/new_product_states.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/new_product.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/start.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/callback_datas.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/callback_datas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/new_product_select_category.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/new_product_select_category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/show_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboards/inline/edit_storage_buttons/show_storage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/throttling.py" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/throttling.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/states/admin_panel/edit_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/states/admin_panel/edit_storage/new_product_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/db_api/sqlalchemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/db_api/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,10 +52,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../python/sp_ua/sp_ua/bot_storage.py" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\Prezerve\Prezerve\states\admin_panel\edit_storage" />
       <recent name="D:\Programming\Prezerve\Prezerve\handlers\users\admin_panel\menu_commands\edit_storage" />
       <recent name="D:\Programming\Prezerve\Prezerve\keyboards\inline\order_management_buttons" />
       <recent name="D:\Programming\Prezerve\Prezerve\keyboards\inline\edit_storage_buttons" />
@@ -218,6 +217,14 @@
       <option name="presentableId" value="Default" />
       <updated>1634388517550</updated>
     </task>
+    <task id="LOCAL-00001" summary="Целый день ебался со скачиванием фотки...">
+      <created>1634679708612</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1634679708612</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,5 +238,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Целый день ебался со скачиванием фотки..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Целый день ебался со скачиванием фотки..." />
   </component>
 </project>

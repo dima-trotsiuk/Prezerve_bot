@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters.builtin import CommandStart  # стандарт�
 
 from loader import dp
 from utils.misc import rate_limit
-from utils.db_api.sqlalchemy import users, engine, storage
+from utils.db_api.models import users, engine, storage
 import logging
 
 
@@ -25,6 +25,7 @@ async def bot_start(message: types.Message):
             id=message.from_user.id
         )
         conn.execute(ins)
+
 
     conn.close()
     await message.answer(f'Привет, {message.from_user.full_name}!')
