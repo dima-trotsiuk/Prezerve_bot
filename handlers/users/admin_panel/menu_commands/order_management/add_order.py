@@ -36,31 +36,14 @@ async def new_order_select_category_call(call: CallbackQuery, callback_data: dic
 @dp.callback_query_handler(select_products_callback.filter(type_command="new_order_admin"))
 async def new_order_call(call: CallbackQuery, callback_data: dict):
     await call.answer()
+
     if callback_data.get("id") == "other_category":
         await call.message.delete()
         await call.message.answer("Выбери категорию:", reply_markup=await new_product_select_func(switch="new_order"))
+
     elif callback_data.get("id") == "save_order":
-        conn = engine.connect()
-        #  проверяем на наличие товаров в заказе
-
-        order_id = select([
-            orders.c.id,
-        ]).order_by(desc(orders.c.id)).limit(1)
-        order_id = conn.execute(order_id)
-
-        order_id = order_id.first()[0]
-
-        order_products_list = order_products.select().where(
-            order_products.c.order_id == order_id
-        )
-        order_products_list = conn.execute(order_products_list)
-        quantity_products = order_products_list.rowcount
-
-        if quantity_products == 0:
-            await call.message.answer("Сначала добавь товары в заказ")
-        else:
-            await call.message.answer(f"Колво товаров - {quantity_products}")
-
+        await call.message.delete()
+        await price_set(call.message)
     else:
         product_id = callback_data.get("id")
         await add_product_to_order(product_id=product_id, message=call.message)
@@ -120,7 +103,7 @@ async def add_product_to_order_call(call: CallbackQuery, callback_data: dict, st
 
         order_id = select([
             orders.c.id,
-        ]).order_by(desc(orders.c.id)).limit(1)
+        ]).where(orders.c.user_telegram_id == call.message.chat.id).order_by(desc(orders.c.id)).limit(1)
         order_id = conn.execute(order_id)
 
         order_id = order_id.first()[0]
@@ -181,3 +164,118 @@ async def answer_q1(message: types.Message, state: FSMContext):
     else:
         await message.answer("Введи число!")
         await AddOrderAdmin.new_value.set()
+
+
+async def price_set(message):
+    conn = engine.connect()
+    #  проверяем на наличие товаров в заказе
+
+    order_id = select([
+        orders.c.id,
+    ]).where(orders.c.user_telegram_id == message.chat.id).order_by(desc(orders.c.id)).limit(1)
+    order_id = conn.execute(order_id)
+
+    order_id = order_id.first()[0]
+
+    order_products_list = order_products.select().where(
+        order_products.c.order_id == order_id
+    )
+    order_products_list = conn.execute(order_products_list)
+    quantity_products = order_products_list.rowcount
+
+    if quantity_products == 0:
+        await message.answer("Сначала добавь товары в заказ")
+    else:
+        quantity_and_product_id = select([
+            order_products.c.quantity,
+            order_products.c.product_id,
+        ]).where(order_products.c.order_id == order_id)
+        quantity_and_product_id = conn.execute(quantity_and_product_id)
+        quantity_and_product_id = quantity_and_product_id.fetchall()
+
+        sum = 0
+        for q_and_p in quantity_and_product_id:
+            quantity = q_and_p[0]
+            product_id = q_and_p[1]
+
+            price_product = select([
+                storage.c.price,
+            ]).where(storage.c.id == product_id)
+            price_product = int((conn.execute(price_product)).first()[0])
+            sum += price_product * quantity
+
+        u = update(orders).where(
+            orders.c.id == order_id
+        ).values(price=sum)
+        conn.execute(u)
+        conn.close()
+        await AddOrderAdmin.set_ttn.set()
+        await message.answer("Жду ТТН:")
+
+
+@dp.message_handler(state=AddOrderAdmin.set_ttn)
+async def answer_q2(message: types.Message, state: FSMContext):
+    ttn = message.text
+
+    conn = engine.connect()
+
+    '''
+    Ищем order_id, platform, full_price, date последнего заказа сделаного админом
+    '''
+    info_order = select([
+        orders.c.id,
+        orders.c.platform,
+        orders.c.price,
+        orders.c.date
+    ]).where(orders.c.user_telegram_id == message.chat.id).order_by(desc(orders.c.id)).limit(1)
+    info_order = conn.execute(info_order)
+    info_order = info_order.first()
+    order_id = info_order[0]
+    platform = info_order[1]
+    full_price = info_order[2]
+    date = info_order[3]
+
+    '''
+    Записываем ТТН в заказ
+    '''
+
+    u = update(orders).where(
+        orders.c.id == order_id
+    ).values(ttn=ttn)
+    conn.execute(u)
+
+    '''
+    Объединяем таблцы Order_products и Storage по номеру заказа
+    '''
+
+    joins = select([
+        order_products.c.quantity,
+        storage.c.price,
+        storage.c.title,
+    ]).select_from(
+        order_products.join(storage)
+    ).where(order_products.c.order_id == order_id)
+    rs = conn.execute(joins)  # [(50, 12, 'Лучші')]
+    conn.close()
+    list_products = rs.fetchall()
+
+    '''
+    Выводим данные о заказе админу
+    '''
+
+    result = f"{date}\n" \
+             f"Заказ №{order_id} ({platform})\n" \
+             f"ТТН {ttn}\n"
+
+    for into in list_products:
+        quantity = into[0]
+        price = into[1]
+        title = into[2]
+
+        result += f"{title} - {quantity}шт ({price}грн)\n"
+
+    result += f"= {full_price} грн"
+
+    await message.answer(result)
+
+    await state.finish()
