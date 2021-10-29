@@ -17,7 +17,7 @@ async def answer_category_id(call: CallbackQuery, callback_data: dict, state: FS
     await call.answer(cache_time=60)
     category_id = callback_data.get("category_id")
     await state.update_data(category_id=category_id)
-    await call.message.answer("Название:")
+    await call.message.answer("Название?")
     await NewProduct.title.set()
     await bot.delete_message(call.message.chat.id, call.message.message_id)
 
