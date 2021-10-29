@@ -1,10 +1,12 @@
 from .models import engine, storage
 
 
-def select_storage_func():
-
+def select_storage_func(category):
     conn = engine.connect()
-    products = storage.select()
+    if category == 0:
+        products = storage.select()
+    else:
+        products = storage.select().where(storage.c.category_id == category)
     products = conn.execute(products)
     products = products.fetchall()
     conn.close()

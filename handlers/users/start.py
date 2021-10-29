@@ -15,17 +15,16 @@ async def bot_start(message: types.Message):
     Записываем пользователей в БД
     '''
     conn = engine.connect()
-    s = users.select().where(users.c.id == message.from_user.id)
+    s = users.select().where(users.c.telegram_id == message.from_user.id)
     flag = conn.execute(s)
     flag = flag.fetchone()
     if not flag:
         ins = users.insert().values(
             first_name=message.from_user.first_name,
             username=message.from_user.username,
-            id=message.from_user.id
+            telegram_id=message.from_user.id
         )
         conn.execute(ins)
-
 
     conn.close()
     await message.answer(f'Привет, {message.from_user.full_name}!')

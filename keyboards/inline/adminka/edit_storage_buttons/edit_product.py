@@ -1,5 +1,4 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputFile, InputMedia, ParseMode, InputMediaPhoto
-from aiogram.utils.markdown import hide_link
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 
 from loader import bot
 from .callback_datas import product_info_for_id_callback
@@ -73,8 +72,6 @@ async def edit_product_for_id(product_id, message, update=False):
                                        f'price - {price}грн')
 
         await message.edit_media(file, reply_markup=edit_product_for_id_key)
-
-
     else:
 
         await bot.send_photo(

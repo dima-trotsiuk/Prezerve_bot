@@ -1,10 +1,7 @@
-import os
-import urllib
-from urllib import request
-
 from aiogram.types import CallbackQuery
 from aiogram.dispatcher.storage import FSMContext
-from keyboards.inline.edit_storage_buttons.callback_datas import new_product_select_category_callback
+
+from keyboards.inline.adminka.globals.callback_datas import select_category_callback
 from loader import dp, bot
 from aiogram import types
 from states.admin_panel.edit_storage.new_product_state import NewProduct
@@ -15,7 +12,7 @@ import logging
 
 
 @dp.callback_query_handler(
-    new_product_select_category_callback.filter(type_command="new_product_select_category_admin"))
+    select_category_callback.filter(type_command="new_product_select_category_admin"))
 async def answer_category_id(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer(cache_time=60)
     category_id = callback_data.get("category_id")
@@ -81,7 +78,7 @@ async def answer_q1(message: types.Message, state: FSMContext):
         category_id = data.get("category_id")
         price = message.text
 
-        conn = engine.connect().execution_options(autocommit=True)
+        conn = engine.connect()
         try:
             ins = storage.insert().values(
                 title=title,

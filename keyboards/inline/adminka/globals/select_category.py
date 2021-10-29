@@ -1,9 +1,10 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from .callback_datas import new_product_select_category_callback
+
+from keyboards.inline.adminka.globals.callback_datas import select_category_callback
 from utils.db_api.models import engine, categories
 
 
-async def new_product_select_func():
+async def new_product_select_func(switch):
     conn = engine.connect()
     categories_list = categories.select()
     categories_list = conn.execute(categories_list)
@@ -18,8 +19,8 @@ async def new_product_select_func():
         list_button = [
             InlineKeyboardButton(
                 text=f"{title}",
-                callback_data=new_product_select_category_callback.new(category_id=id,
-                                                                       type_command="new_product_select_category_admin")
+                callback_data=select_category_callback.new(category_id=id,
+                                                           type_command=f"{switch}_select_category_admin")
             ),
         ]
         list_buttons.append(list_button)

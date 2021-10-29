@@ -1,15 +1,12 @@
-import os
-import urllib
-from urllib import request
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 from sqlalchemy import update
 from aiogram import types
 
-from keyboards.inline.edit_storage_buttons.edit_product import edit_product_for_id
+from keyboards.inline.adminka.edit_storage_buttons.edit_product import edit_product_for_id
 from states.admin_panel.edit_storage.own_value_state import NewValueQuantity, NewValueOther
 from utils.db_api.models import engine, storage
-from keyboards.inline.edit_storage_buttons.callback_datas import product_info_for_id_callback
+from keyboards.inline.adminka.edit_storage_buttons.callback_datas import product_info_for_id_callback
 from loader import dp, bot
 
 
@@ -46,7 +43,8 @@ async def edit_product_for_id_call(call: CallbackQuery, callback_data: dict, sta
     elif callback_data.get("command") == "other":
         await call.message.answer(f"1. Изменить заголовок\n"
                                   f"2. Изменить описание\n"
-                                  f"3. Изменить фото\n")
+                                  f"3. Изменить фото\n"
+                                  f"4. Изменить цену\n")
 
         await state.update_data(product_id=product_id)
         await NewValueOther.new_value_other.set()
@@ -97,6 +95,9 @@ async def answer_other(message: types.Message, state: FSMContext):
     elif switch == "3":
         await message.answer("Новое фото:")
         await state.update_data(command="new_photo")
+    elif switch == "4":
+        await message.answer("Новая цена:")
+        await state.update_data(command="new_price")
     await NewValueOther.info.set()
 
 
@@ -106,24 +107,23 @@ async def answer_q1(message: types.Message, state: FSMContext):
     command = data.get("command")
     product_id = data.get("product_id")
 
-    conn = engine.connect()
-    if command == "new_title":
-        title = message.text
+    text = message.text
 
+    conn = engine.connect()
+
+    if command == "new_title":
         update_title = update(storage).where(
             storage.c.id == product_id
         ).values(
-            title=title,
+            title=text,
         )
         conn.execute(update_title)
 
     elif command == "new_content":
-        content = message.text
-
         update_content = update(storage).where(
             storage.c.id == product_id
         ).values(
-            content=content,
+            content=text,
         )
         conn.execute(update_content)
     elif command == "new_photo":
@@ -149,6 +149,14 @@ async def answer_q1(message: types.Message, state: FSMContext):
             photo_id=document_id,
         )
         conn.execute(update_photo)
+    elif command == "new_price":
+        if text.isdigit():
+            update_content = update(storage).where(
+                storage.c.id == product_id
+            ).values(
+                price=text,
+            )
+            conn.execute(update_content)
 
     conn.close()
 
