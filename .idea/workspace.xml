@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="955b2631-8201-4167-8072-181d3bb5bb4c" name="Default Changelist" comment="Доделал систему добавления товаров и вывода склада. Начал роботу над Управлением заказами. Создал две новых таблицы (orders, order_products). Пофиксил ошибки.">
+    <list default="true" id="955b2631-8201-4167-8072-181d3bb5bb4c" name="Default Changelist" comment="Доделал добавление нового заказа админу.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/order_management/add_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/order_management/add_order.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/states/admin_panel/order_management/add_order_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/states/admin_panel/order_management/add_order_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/new_product.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/users/admin_panel/menu_commands/edit_storage/new_product.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/db_api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/db_api/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635506866490</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Доделал добавление нового заказа админу.">
+      <created>1635513773478</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1635513773478</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -243,6 +251,7 @@
     <MESSAGE value="Целый день ебался со скачиванием фотки..." />
     <MESSAGE value="Зря ебался с скачиванием фотки.... Оказывается,  сервера телеграма делают это вместо меня :(" />
     <MESSAGE value="Доделал систему добавления товаров и вывода склада. Начал роботу над Управлением заказами. Создал две новых таблицы (orders, order_products). Пофиксил ошибки." />
-    <option name="LAST_COMMIT_MESSAGE" value="Доделал систему добавления товаров и вывода склада. Начал роботу над Управлением заказами. Создал две новых таблицы (orders, order_products). Пофиксил ошибки." />
+    <MESSAGE value="Доделал добавление нового заказа админу." />
+    <option name="LAST_COMMIT_MESSAGE" value="Доделал добавление нового заказа админу." />
   </component>
 </project>
