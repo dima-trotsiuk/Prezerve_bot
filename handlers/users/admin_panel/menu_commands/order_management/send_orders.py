@@ -5,11 +5,20 @@ from utils.db_api.models import engine, Orders
 async def send_orders_func(message):
     conn = engine.connect()
 
-    u = update(Orders).where(
+    flag = Orders.select().where(
         Orders.c.status == "processing"
-    ).values(status="completed")
-    conn.execute(u)
+    )
+    flag = conn.execute(flag)
+    flag = flag.rowcount
 
-    await message.answer("Все заказы обработаны👍")
+    if flag == 0:
+        await message.answer("А что отправлять то? Заказов нету😳")
+    else:
+        u = update(Orders).where(
+            Orders.c.status == "processing"
+        ).values(status="completed")
+        conn.execute(u)
 
-    conn.close()
+        await message.answer(f"Все заказы ({flag}) обработаны👍")
+
+        conn.close()
