@@ -14,17 +14,17 @@ engine = create_engine(
 
 metadata = MetaData()
 
-users = Table('Users', metadata,
+Users = Table('Users', metadata,
               Column('telegram_id', String(255), nullable=False, unique=True),
               Column('first_name', String(255), nullable=False),
               Column('username', String(255)),
               Column('created_on', DateTime(), default=datetime.now)
               )
-categories = Table('Categories', metadata,
+Categories = Table('Categories', metadata,
                    Column('id', Integer(), primary_key=True),
                    Column('title', String(255), nullable=False),  # nullable=False =NOT NULL
                    )
-storage = Table('Storage', metadata,
+Storage = Table('Storage', metadata,
                 Column('id', Integer(), primary_key=True),
                 Column('title', String(255), nullable=False),  # nullable=False =NOT NULL
                 Column('content', UnicodeText(collation='utf8mb4_unicode_ci'), nullable=False),
@@ -34,7 +34,7 @@ storage = Table('Storage', metadata,
                 Column('photo_id', String(255)),
                 )
 
-orders = Table('Orders', metadata,
+Orders = Table('Orders', metadata,
                Column('id', Integer(), primary_key=True),
                Column('price', Integer()),
                Column('platform', Enum('instagram', 'telegram'), default='telegram'),
@@ -44,7 +44,7 @@ orders = Table('Orders', metadata,
                Column('user_telegram_id', String(255), ForeignKey('Users.telegram_id'))
                )
 
-order_products = Table('Order_products', metadata,
+Order_products = Table('Order_products', metadata,
                        Column('id', Integer(), primary_key=True),
                        Column('category_id', Integer(), ForeignKey('Categories.id')),
                        Column('product_id', Integer(), ForeignKey('Storage.id')),

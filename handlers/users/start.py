@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters.builtin import CommandStart  # стандарт�
 
 from loader import dp
 from utils.misc import rate_limit
-from utils.db_api.models import users, engine, storage
+from utils.db_api.models import Users, engine, Storage
 import logging
 
 
@@ -15,11 +15,11 @@ async def bot_start(message: types.Message):
     Записываем пользователей в БД
     '''
     conn = engine.connect()
-    s = users.select().where(users.c.telegram_id == message.from_user.id)
+    s = Users.select().where(Users.c.telegram_id == message.from_user.id)
     flag = conn.execute(s)
     flag = flag.fetchone()
     if not flag:
-        ins = users.insert().values(
+        ins = Users.insert().values(
             first_name=message.from_user.first_name,
             username=message.from_user.username,
             telegram_id=message.from_user.id

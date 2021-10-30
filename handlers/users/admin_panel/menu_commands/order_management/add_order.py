@@ -12,7 +12,7 @@ from keyboards.inline.adminka.order_management_buttons.callback_datas import add
 from loader import dp
 from states.admin_panel.order_management.add_order_state import AddOrderAdmin
 
-from utils.db_api.models import engine, storage, order_products, orders
+from utils.db_api.models import engine, Storage, Order_products, Orders
 from aiogram.dispatcher import FSMContext
 
 
@@ -25,7 +25,7 @@ async def new_order_select_category_call(call: CallbackQuery, callback_data: dic
                               reply_markup=await show_storage_func(switch="new_order", category=category_id))
 
     conn = engine.connect()
-    ins = orders.insert().values(
+    ins = Orders.insert().values(
         platform='instagram',
         user_telegram_id=call.message.chat.id
     )
@@ -59,7 +59,7 @@ async def add_product_to_order_call(call: CallbackQuery, callback_data: dict, st
     await state.update_data(product_id=product_id)
     await state.update_data(quantity_selected=quantity_selected)
 
-    max_quantity = storage.select().where(storage.c.id == product_id)
+    max_quantity = Storage.select().where(Storage.c.id == product_id)
     max_quantity = conn.execute(max_quantity)
     max_quantity = int(max_quantity.first()[3])
 
@@ -95,15 +95,15 @@ async def add_product_to_order_call(call: CallbackQuery, callback_data: dict, st
         await call.message.delete()
     elif callback_data.get("command") == "add_to_orders":
         category_id = select([
-            storage.c.category_id,
-        ]).where(storage.c.id == product_id)
+            Storage.c.category_id,
+        ]).where(Storage.c.id == product_id)
         category_id = conn.execute(category_id)
 
         category_id = category_id.first()[0]
 
         order_id = select([
-            orders.c.id,
-        ]).where(orders.c.user_telegram_id == call.message.chat.id).order_by(desc(orders.c.id)).limit(1)
+            Orders.c.id,
+        ]).where(Orders.c.user_telegram_id == call.message.chat.id).order_by(desc(Orders.c.id)).limit(1)
         order_id = conn.execute(order_id)
 
         order_id = order_id.first()[0]
@@ -115,12 +115,12 @@ async def add_product_to_order_call(call: CallbackQuery, callback_data: dict, st
         transaction = conn.begin()
 
         try:
-            u = update(storage).where(
-                storage.c.id == product_id
-            ).values(quantity=storage.c.quantity - quantity_selected)
+            u = update(Storage).where(
+                Storage.c.id == product_id
+            ).values(quantity=Storage.c.quantity - quantity_selected)
             conn.execute(u)
 
-            ins = order_products.insert().values(
+            ins = Order_products.insert().values(
                 category_id=category_id,
                 product_id=product_id,
                 order_id=order_id,
@@ -143,7 +143,7 @@ async def answer_q1(message: types.Message, state: FSMContext):
     product_id = data.get("product_id")
     call_message = data.get("message")
     conn = engine.connect()
-    max_quantity = storage.select().where(storage.c.id == product_id)
+    max_quantity = Storage.select().where(Storage.c.id == product_id)
     max_quantity = conn.execute(max_quantity)
     max_quantity = int(max_quantity.first()[3])
     conn.close()
@@ -171,14 +171,14 @@ async def price_set(message):
     #  проверяем на наличие товаров в заказе
 
     order_id = select([
-        orders.c.id,
-    ]).where(orders.c.user_telegram_id == message.chat.id).order_by(desc(orders.c.id)).limit(1)
+        Orders.c.id,
+    ]).where(Orders.c.user_telegram_id == message.chat.id).order_by(desc(Orders.c.id)).limit(1)
     order_id = conn.execute(order_id)
 
     order_id = order_id.first()[0]
 
-    order_products_list = order_products.select().where(
-        order_products.c.order_id == order_id
+    order_products_list = Order_products.select().where(
+        Order_products.c.order_id == order_id
     )
     order_products_list = conn.execute(order_products_list)
     quantity_products = order_products_list.rowcount
@@ -187,9 +187,9 @@ async def price_set(message):
         await message.answer("Сначала добавь товары в заказ")
     else:
         quantity_and_product_id = select([
-            order_products.c.quantity,
-            order_products.c.product_id,
-        ]).where(order_products.c.order_id == order_id)
+            Order_products.c.quantity,
+            Order_products.c.product_id,
+        ]).where(Order_products.c.order_id == order_id)
         quantity_and_product_id = conn.execute(quantity_and_product_id)
         quantity_and_product_id = quantity_and_product_id.fetchall()
 
@@ -199,13 +199,13 @@ async def price_set(message):
             product_id = q_and_p[1]
 
             price_product = select([
-                storage.c.price,
-            ]).where(storage.c.id == product_id)
+                Storage.c.price,
+            ]).where(Storage.c.id == product_id)
             price_product = int((conn.execute(price_product)).first()[0])
             sum += price_product * quantity
 
-        u = update(orders).where(
-            orders.c.id == order_id
+        u = update(Orders).where(
+            Orders.c.id == order_id
         ).values(price=sum)
         conn.execute(u)
         conn.close()
@@ -223,11 +223,11 @@ async def answer_q2(message: types.Message, state: FSMContext):
     Ищем order_id, platform, full_price, date последнего заказа сделаного админом
     '''
     info_order = select([
-        orders.c.id,
-        orders.c.platform,
-        orders.c.price,
-        orders.c.date
-    ]).where(orders.c.user_telegram_id == message.chat.id).order_by(desc(orders.c.id)).limit(1)
+        Orders.c.id,
+        Orders.c.platform,
+        Orders.c.price,
+        Orders.c.date
+    ]).where(Orders.c.user_telegram_id == message.chat.id).order_by(desc(Orders.c.id)).limit(1)
     info_order = conn.execute(info_order)
     info_order = info_order.first()
     order_id = info_order[0]
@@ -239,8 +239,8 @@ async def answer_q2(message: types.Message, state: FSMContext):
     Записываем ТТН в заказ
     '''
 
-    u = update(orders).where(
-        orders.c.id == order_id
+    u = update(Orders).where(
+        Orders.c.id == order_id
     ).values(ttn=ttn)
     conn.execute(u)
 
@@ -249,12 +249,12 @@ async def answer_q2(message: types.Message, state: FSMContext):
     '''
 
     joins = select([
-        order_products.c.quantity,
-        storage.c.price,
-        storage.c.title,
+        Order_products.c.quantity,
+        Storage.c.price,
+        Storage.c.title,
     ]).select_from(
-        order_products.join(storage)
-    ).where(order_products.c.order_id == order_id)
+        Order_products.join(Storage)
+    ).where(Order_products.c.order_id == order_id)
     rs = conn.execute(joins)  # [(50, 12, 'Лучші')]
     conn.close()
     list_products = rs.fetchall()

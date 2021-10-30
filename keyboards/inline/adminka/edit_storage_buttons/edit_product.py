@@ -2,12 +2,12 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMedia
 
 from loader import bot
 from .callback_datas import product_info_for_id_callback
-from utils.db_api.models import engine, storage
+from utils.db_api.models import engine, Storage
 
 
 async def edit_product_for_id(product_id, message, update=False):
     conn = engine.connect()
-    product_info = storage.select().where(storage.c.id == product_id)
+    product_info = Storage.select().where(Storage.c.id == product_id)
     product_info = conn.execute(product_info)
     product_info = product_info.fetchone()
     conn.close()

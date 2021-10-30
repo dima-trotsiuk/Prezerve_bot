@@ -6,7 +6,7 @@ from loader import dp, bot
 from aiogram import types
 from states.admin_panel.edit_storage.new_product_state import NewProduct
 # sqlalchemy
-from utils.db_api.models import engine, storage
+from utils.db_api.models import engine, Storage
 
 import logging
 
@@ -80,7 +80,7 @@ async def answer_q1(message: types.Message, state: FSMContext):
 
         conn = engine.connect()
         try:
-            ins = storage.insert().values(
+            ins = Storage.insert().values(
                 title=title,
                 content=content,
                 quantity=quantity,

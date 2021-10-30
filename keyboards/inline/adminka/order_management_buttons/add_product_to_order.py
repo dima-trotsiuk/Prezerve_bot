@@ -3,12 +3,12 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMedia
 from .callback_datas import add_product_to_order_callback
 from loader import bot
 
-from utils.db_api.models import engine, storage
+from utils.db_api.models import engine, Storage
 
 
 async def add_product_to_order(product_id, message, update=False, quantity_selected=0):
     conn = engine.connect()
-    product_info = storage.select().where(storage.c.id == product_id)
+    product_info = Storage.select().where(Storage.c.id == product_id)
     product_info = conn.execute(product_info)
     product_info = product_info.fetchone()
     conn.close()
