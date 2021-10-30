@@ -42,7 +42,6 @@ async def new_order_call(call: CallbackQuery, callback_data: dict):
         await call.message.answer("Выбери категорию:", reply_markup=await new_product_select_func(switch="new_order"))
 
     elif callback_data.get("id") == "save_order":
-        await call.message.delete()
         await price_set(call.message)
     else:
         product_id = callback_data.get("id")
@@ -186,6 +185,7 @@ async def price_set(message):
     if quantity_products == 0:
         await message.answer("Сначала добавь товары в заказ")
     else:
+        await message.delete()
         quantity_and_product_id = select([
             Order_products.c.quantity,
             Order_products.c.product_id,

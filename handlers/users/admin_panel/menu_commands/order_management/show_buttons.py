@@ -1,6 +1,7 @@
 from aiogram import types
 from aiogram.types import CallbackQuery
 
+from handlers.users.admin_panel.menu_commands.order_management.show_orders import show_orders_func
 from keyboards.inline.adminka.globals.select_category import new_product_select_func
 from keyboards.inline.adminka.order_management_buttons.callback_datas import order_management_callback
 from keyboards.inline.adminka.order_management_buttons.order_managment_buttons import order_management
@@ -19,5 +20,7 @@ async def order_managment_admin_call(call: CallbackQuery, callback_data: dict):
     command = callback_data.get("command")
     if command == "add":
         await call.message.answer("Выбери категорию:", reply_markup=await new_product_select_func(switch="new_order"))
+    elif command == "check":
+        await show_orders_func(call.message)
     else:
         await call.message.answer(f"{command}")
