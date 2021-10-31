@@ -5,8 +5,8 @@ from handlers.users.admin_panel.menu_commands.edit_storage.edit_product import d
 from handlers.users.admin_panel.menu_commands.order_management.add_order import dp
 from handlers.users.admin_panel.menu_commands.order_management.show_buttons import dp
 from handlers.users.admin_panel.menu_commands.order_management.delete_order import dp
+from handlers.users.admin_panel.menu_commands.search_for_ttn.set_id import dp
 
-from .search_for_ttn import dp
 from .statistics import dp
 
 __all__ = ["dp"]

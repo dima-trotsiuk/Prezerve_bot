@@ -51,4 +51,5 @@ Order_products = Table('Order_products', metadata,
                        Column('order_id', Integer(), ForeignKey('Orders.id')),
                        Column('quantity', Integer()),
                        )
-metadata.create_all(engine)  # створення таблиці
+
+# metadata.create_all(engine)  # створення таблиці
