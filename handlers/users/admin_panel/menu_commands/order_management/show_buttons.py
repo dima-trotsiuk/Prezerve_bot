@@ -9,6 +9,7 @@ from keyboards.inline.adminka.order_management_buttons.callback_datas import ord
 from keyboards.inline.adminka.order_management_buttons.order_managment_buttons import order_management
 from loader import dp
 from states.admin_panel.order_management.delete_order_state import DeleteOrderAdmin
+from states.admin_panel.order_management.edit_order_state import EditOrderAdmin
 
 
 @dp.message_handler(text="😎 Управление заказами 😎")
@@ -30,5 +31,6 @@ async def order_managment_admin_call(call: CallbackQuery, callback_data: dict):
     elif command == "delete":
         await DeleteOrderAdmin.delete_for_id.set()
         await call.message.answer("Номер заказа?")
-    else:
-        await call.message.answer(f"{command}")
+    elif command == "edit":
+        await EditOrderAdmin.edit_for_id.set()
+        await call.message.answer("Номер заказа?")

@@ -66,10 +66,10 @@ async def edit_product_for_id(product_id, message, update=False):
         '''
 
         file = InputMediaPhoto(media=photo,
-                               caption=f'title - {title}\n'
-                                       f'content - {content}\n'
-                                       f'quantity - {quantity}шт\n'
-                                       f'price - {price}грн')
+                               caption=f'{title}\n'
+                                       f'{content}\n'
+                                       f'{quantity}шт\n'
+                                       f'{price}грн')
 
         await message.edit_media(file, reply_markup=edit_product_for_id_key)
     else:
@@ -78,8 +78,8 @@ async def edit_product_for_id(product_id, message, update=False):
             chat_id=message.chat.id,
             photo=photo,
             reply_markup=edit_product_for_id_key,
-            caption=f'title - {title}\n'
-                    f'content - {content}\n'
-                    f'quantity - {quantity}шт\n'
-                    f'price - {price}грн',
+            caption=f'{title}\n'
+                    f'{content}\n'
+                    f'{quantity}шт\n'
+                    f'{price}грн',
         )
