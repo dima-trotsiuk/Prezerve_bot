@@ -1,13 +1,25 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from loader import bot
+from utils.db_api.models import engine, Order_products
 from .callback_datas import show_products_callback
 
 
 async def show_products_button(product_info, full_products, message, index_product=1, update=False):
+
+    content = product_info[2]
+    quantity = product_info[3]
+    price = product_info[5]
+    photo = product_info[6]
+
+    if int(quantity) == 0:
+        text_availability = "Нет в наличии ❌"
+    else:
+        text_availability = f"Доступно {quantity} шт"
+
     list_button = [
         [
             InlineKeyboardButton(
-                text=f"В корзину  🛒",
+                text="В корзину  🛒",
                 callback_data=show_products_callback.new(command="bag",
                                                          index_product=index_product,
                                                          type_command="show_products_user")
@@ -33,15 +45,17 @@ async def show_products_button(product_info, full_products, message, index_produ
                                                          type_command="show_products_user")
             ),
         ],
+        [
+            InlineKeyboardButton(
+                text=text_availability,
+                callback_data=show_products_callback.new(command="ignore",
+                                                         index_product=index_product,
+                                                         type_command="show_products_user")
+            )
+        ]
     ]
 
     show_products_buttons = InlineKeyboardMarkup(row_width=3, inline_keyboard=list_button)
-
-    title = product_info[1]
-    content = product_info[2]
-    quantity = product_info[3]
-    price = product_info[5]
-    photo = product_info[6]
 
     if update:
         file = InputMediaPhoto(media=photo,

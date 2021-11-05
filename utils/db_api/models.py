@@ -50,6 +50,8 @@ Order_products = Table('Order_products', metadata,
                        Column('product_id', Integer(), ForeignKey('Storage.id')),
                        Column('order_id', Integer(), ForeignKey('Orders.id')),
                        Column('quantity', Integer()),
+                       Column('user_telegram_id', String(255), ForeignKey('Users.telegram_id'))
                        )
+
 
 metadata.create_all(engine)  # створення таблиці

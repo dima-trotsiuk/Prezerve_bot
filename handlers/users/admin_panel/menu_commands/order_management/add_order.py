@@ -2,7 +2,7 @@ import logging
 
 from aiogram import types
 from aiogram.types import CallbackQuery
-from sqlalchemy import select, asc, desc, update
+from sqlalchemy import select, desc, update
 
 from keyboards.inline.adminka.globals.callback_datas import select_category_callback, select_products_callback
 from keyboards.inline.adminka.globals.select_category import new_product_select_func
@@ -124,6 +124,7 @@ async def add_product_to_order_call(call: CallbackQuery, callback_data: dict, st
                 product_id=product_id,
                 order_id=order_id,
                 quantity=quantity_selected,
+                user_telegram_id=call.message.chat.id
             )
             conn.execute(ins)
             transaction.commit()
