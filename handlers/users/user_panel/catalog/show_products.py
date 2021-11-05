@@ -1,9 +1,9 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
+from sqlalchemy import and_
 
 from keyboards.inline.adminka.globals.callback_datas import select_category_callback
-from keyboards.inline.adminka.globals.select_category import new_product_select_func
 from keyboards.inline.user.catalog.callback_datas import show_products_callback
 from loader import dp
 from states.user.catalog.show_product_state import ShowProduct
@@ -47,14 +47,20 @@ async def command_processing_catalog(call: CallbackQuery, callback_data: dict, s
         quantity = product_info[3]
 
         conn = engine.connect()
-        flag = Order_products.select().where(Order_products.c.product_id == id)
+        flag = Order_products.select().where(
+            and_(
+                Order_products.c.product_id == id,
+                Order_products.c.user_telegram_id == call.message.chat.id,
+                 )
+            )
         flag = conn.execute(flag)
         flag = flag.rowcount
         conn.close()
 
         if not flag:
             if int(quantity) == 0:
-                await call.message.answer(f"Этого товара нету в наличии, можете уточнить дату поступления в instagram 😊")
+                await call.message.answer(
+                    f"Этого товара нету в наличии, можете уточнить дату поступления в instagram 😊")
             else:
                 await ShowProduct.quantity.set()
                 await state.update_data(product_info=product_info)
@@ -99,17 +105,16 @@ async def answer_other(message: types.Message, state: FSMContext):
 
     data = await state.get_data()
     product_info = data.get("product_info")
-    products_info = data.get("products_info")
-    message_state = data.get("message_state")
 
     product_id = product_info[0]
     quantity = product_info[3]
     category_id = product_info[4]
 
-
     if quantity_user.isdigit():
-        await state.reset_state(
-            with_data=False)  # Если надо сбросить только состояние, воспользуйтесь await state.reset_state(with_data=False)
+        """
+        Если надо сбросить только состояние, воспользуйтесь await state.reset_state(with_data=False)
+        """
+        await state.reset_state(with_data=False)
         if quantity == 0:
             await message.reply(f"Этого товара нету в наличии, можете уточнить дату поступления в instagram 😊")
 
