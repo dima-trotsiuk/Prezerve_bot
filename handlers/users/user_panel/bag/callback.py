@@ -18,7 +18,7 @@ async def get_storage_func(message: types.Message):
 
 
 @dp.callback_query_handler(show_buttons_callback.filter(type_command="show_buttons_bag"))
-async def command_processing_catalog(call: CallbackQuery, callback_data: dict, state: FSMContext):
+async def command_processing_catalog(call: CallbackQuery, callback_data: dict):
     await call.answer(cache_time=1)
 
     if await is_empty_bag_func(call.message):

@@ -9,7 +9,7 @@ from states.admin_panel.search_for_ttn.search_for_ttn_state import SearchForTtnA
 from utils.db_api.models import engine, Orders, Order_products, Storage
 
 
-@dp.message_handler(text="🗿 Поиск по ТТН 🗿")
+@dp.message_handler(text="Поиск по ТТН 🗿")
 async def get_storage_func(message: types.Message):
     await SearchForTtnAdmin.search_for_ttn.set()
     await message.answer("ТТН заказа?")

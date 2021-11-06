@@ -102,7 +102,7 @@ async def answer_other(message: types.Message, state: FSMContext):
         """
         Если надо сбросить только состояние, воспользуйтесь await state.reset_state(with_data=False)
         """
-        await state.reset_state(with_data=False)
+        await state.finish()
         if quantity == 0:
             await message.reply(f"Этого товара нету в наличии, можете уточнить дату поступления в instagram 😊")
 

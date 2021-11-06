@@ -8,4 +8,4 @@ from aiogram.dispatcher.filters import Command
 
 @dp.message_handler(Command("menu"), IsAdmin())
 async def show_menu(message: types.Message):
-    await message.answer("Вот меню", reply_markup=admin_menu)
+    await message.answer("Что пожелает господин?", reply_markup=admin_menu)

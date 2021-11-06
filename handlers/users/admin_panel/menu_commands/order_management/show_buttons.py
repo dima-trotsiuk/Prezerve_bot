@@ -12,9 +12,9 @@ from states.admin_panel.order_management.delete_order_state import DeleteOrderAd
 from states.admin_panel.order_management.edit_order_state import EditOrderAdmin
 
 
-@dp.message_handler(text="😎 Управление заказами 😎")
+@dp.message_handler(text="Управление заказами 😎")
 async def get_storage_func(message: types.Message):
-    await message.answer("😎 Управление заказами 😎", reply_markup=order_management)
+    await message.answer("Управление заказами 😎", reply_markup=order_management)
 
 
 @dp.callback_query_handler(order_management_callback.filter(type_command="order_managment_admin"))

@@ -3,7 +3,7 @@ from loader import dp
 from utils.db_api.select_storage import select_storage_func
 
 
-@dp.message_handler(text="🍑 Вывести склад 🍑")
+@dp.message_handler(text="Вывести склад 🍑")
 async def get_storage_func(message: types.Message):
     products = select_storage_func(category=0)
     full_storage = ''

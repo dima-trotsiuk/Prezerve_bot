@@ -5,6 +5,7 @@ from sqlalchemy import select, desc, and_, update
 from handlers.users.user_panel.bag.products_in_bag import products_in_bag_func
 from keyboards.default.default_menu import default_menu
 from keyboards.default.get_number_bag import get_contact_keyboard
+from keyboards.inline.user.bag.message_to_admin import message_to_admin_button
 from loader import dp, bot
 from states.user.bag.get_namber_state import GetNumber
 from utils.db_api.models import engine, Orders, Order_products, Storage, Users
@@ -179,7 +180,6 @@ async def sending_to_admin(message, order_id):
 
     joins = select([
         Order_products.c.quantity,
-        Storage.c.price,
         Storage.c.title,
     ]).select_from(
         Order_products.join(Storage)
@@ -200,18 +200,20 @@ async def sending_to_admin(message, order_id):
     Выводим данные о заказе админу
     '''
 
-    result = f"{date}\n" \
-             f"Заказ №{order_id} ({platform})\n" \
-             f"Номер телефона {number}\n"
+    result = f"<b>Заказ №{order_id}</b>\n\n" \
+             f"<b>Дата - </b><i>{date}</i>\n" \
+             f"<b>Номер телефона </b><i>{number}</i>\n\n"
 
     for into in list_products:
         quantity = into[0]
-        price = into[1]
-        title = into[2]
+        title = into[1]
 
-        result += f"{title} - {quantity}шт ({price}грн)\n"
+        result += f"<b>{title}</b>\n" \
+                  f"Колво - {quantity}шт\n"
 
-    result += f"= {full_price} грн"
+    result += f"\n<b>Сума: {full_price}грн</b>"
     from data import config
-    for el in config.admins:
-        await bot.send_message(el, result)
+    for admin_id in config.admins:
+        await message_to_admin_button(order_id=order_id,
+                                      text=result,
+                                      admin_id=admin_id)

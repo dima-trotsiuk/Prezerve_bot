@@ -9,9 +9,9 @@ from loader import dp
 from keyboards.inline.adminka.globals.select_category import new_product_select_func
 
 
-@dp.message_handler(text="🤡 Редактировать склад 🤡")
+@dp.message_handler(text="Редактировать склад 🤡")
 async def get_storage_func(message: types.Message):
-    await message.answer("Вы хотите 🤡 Редактировать склад 🤡",
+    await message.answer("Редактировать склад 🤡",
                          reply_markup=await show_storage_func(switch="edit_storage"))
 
 
