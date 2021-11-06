@@ -5,5 +5,6 @@ from .bag.callback import dp
 from .catalog.callback import dp
 from .catalog.show_products import dp
 from .bag.edit import dp
+from .bag.checkout import dp
 
 __all__ = ["dp"]

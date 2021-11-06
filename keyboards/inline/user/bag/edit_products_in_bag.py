@@ -1,10 +1,11 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 
+from handlers.users.user_panel.bag.products_in_bag import products_in_bag_func
 from loader import bot
 from .callback_datas import edit_products_in_bag_callback
 
 
-async def edit_products_in_bag_func(product_info, full_products, message, index_product=1, update=False):
+async def edit_products_in_bag_func(message, index_product=1, update=False):
     """
     :param update:
     :param index_product:
@@ -19,6 +20,11 @@ async def edit_products_in_bag_func(product_info, full_products, message, index_
     Storage.c.price, [4]
     Storage.c.photo_id, [5]
     """
+    full_products = await products_in_bag_func(message)
+    product_info = full_products[index_product - 1]
+
+    quantity_products = len(full_products)
+
     quantity_in_bag = product_info[1]
     title = product_info[2]
     quantity_all = product_info[3]
@@ -38,7 +44,7 @@ async def edit_products_in_bag_func(product_info, full_products, message, index_
     elif int(quantity_all) < int(quantity_in_bag):
         quantity_text = f"\n\nВ наличии только {quantity_all}шт!"
 
-    if full_products == 1:
+    if quantity_products == 1:
         list_button = [
             [
                 InlineKeyboardButton(
@@ -75,7 +81,7 @@ async def edit_products_in_bag_func(product_info, full_products, message, index_
                                                                     type_command="edit_products_bag")
                 ),
                 InlineKeyboardButton(
-                    text=f"{index_product} / {full_products}",
+                    text=f"{index_product} / {quantity_products}",
                     callback_data=edit_products_in_bag_callback.new(command="ignore",
                                                                     index_product=index_product,
                                                                     type_command="edit_products_bag")

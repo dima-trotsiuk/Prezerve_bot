@@ -18,7 +18,8 @@ Users = Table('Users', metadata,
               Column('telegram_id', String(255), nullable=False, unique=True),
               Column('first_name', String(255), nullable=False),
               Column('username', String(255)),
-              Column('created_on', DateTime(), default=datetime.now)
+              Column('created_on', DateTime(), default=datetime.now),
+              Column('number', String(255))
               )
 Categories = Table('Categories', metadata,
                    Column('id', Integer(), primary_key=True),
