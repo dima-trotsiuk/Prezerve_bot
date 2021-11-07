@@ -1,9 +1,8 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-get_contact_keyboard = ReplyKeyboardMarkup(
+cancel_button = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="Поделиться номером телефона", request_contact=True),
             KeyboardButton(text="Отмена"),
         ],
 
@@ -11,5 +10,3 @@ get_contact_keyboard = ReplyKeyboardMarkup(
     resize_keyboard=True
 
 )
-
-

@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from loader import bot
-from .callback_datas import message_to_admin_callback
+from keyboards.inline.user.bag.callback_datas import message_to_admin_callback
 
 
 async def message_to_admin_button(order_id, text, admin_id):

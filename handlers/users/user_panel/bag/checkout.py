@@ -6,7 +6,7 @@ from handlers.users.user_panel.bag.products_in_bag import products_in_bag_func
 from keyboards.default.default_menu import default_menu
 from keyboards.default.get_number_bag import get_contact_keyboard
 from keyboards.inline.user.bag.message_to_admin import message_to_admin_button
-from loader import dp, bot
+from loader import dp
 from states.user.bag.get_namber_state import GetNumber
 from utils.db_api.models import engine, Orders, Order_products, Storage, Users
 
@@ -25,13 +25,9 @@ async def validation(message):
             await message.answer("Отредактируйте корзину перед тем, как сделать заказ 😡")
             break
     if flag:
-        await get_number(message)
-
-
-async def get_number(message):
-    await message.answer("Поделитесь с нами вашем номером телефона, чтобы мы могли связатся с вами. "
-                         "Или напишите его ниже в формате +380661112233", reply_markup=get_contact_keyboard)
-    await GetNumber.number.set()
+        await message.answer("Поделитесь с нами вашем номером телефона, чтобы мы могли связатся с вами. "
+                             "Или напишите его ниже в формате +380661112233", reply_markup=get_contact_keyboard)
+        await GetNumber.number.set()
 
 
 async def writing_number_to_database(message, number):

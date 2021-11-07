@@ -7,6 +7,7 @@ from handlers.users.admin_panel.menu_commands.order_management.show_buttons impo
 from handlers.users.admin_panel.menu_commands.order_management.delete_order import dp
 from handlers.users.admin_panel.menu_commands.search_for_ttn.set_id import dp
 from handlers.users.admin_panel.menu_commands.order_management.edit_order import dp
+from handlers.users.admin_panel.menu_commands.other.set_ttn import dp
 from .statistics import dp
 
 __all__ = ["dp"]
