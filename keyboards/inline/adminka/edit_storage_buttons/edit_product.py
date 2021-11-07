@@ -12,7 +12,6 @@ async def edit_product_for_id(product_id, message, update=False):
     product_info = product_info.fetchone()
     conn.close()
 
-    title = product_info[1]
     content = product_info[2]
     quantity = product_info[3]
     price = product_info[5]
@@ -66,10 +65,10 @@ async def edit_product_for_id(product_id, message, update=False):
         '''
 
         file = InputMediaPhoto(media=photo,
-                               caption=f'{title}\n'
-                                       f'{content}\n'
-                                       f'{quantity}шт\n'
-                                       f'{price}грн')
+                               caption=
+                               f'{content}\n'
+                               f'{quantity}шт\n'
+                               f'{price}грн')
 
         await message.edit_media(file, reply_markup=edit_product_for_id_key)
     else:
@@ -78,8 +77,8 @@ async def edit_product_for_id(product_id, message, update=False):
             chat_id=message.chat.id,
             photo=photo,
             reply_markup=edit_product_for_id_key,
-            caption=f'{title}\n'
-                    f'{content}\n'
-                    f'{quantity}шт\n'
-                    f'{price}грн',
+            caption=
+            f'{content}\n'
+            f'{quantity}шт\n'
+            f'{price}грн',
         )

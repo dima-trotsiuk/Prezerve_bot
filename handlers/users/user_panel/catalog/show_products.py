@@ -4,6 +4,8 @@ from aiogram.types import CallbackQuery
 from sqlalchemy import and_
 
 from handlers.users.user_panel.catalog.get_products_for_cat import get_poducts_for_cat_func
+from keyboards.default.cancel import cancel_button
+from keyboards.default.default_menu import default_menu
 from keyboards.inline.adminka.globals.callback_datas import select_category_callback
 from keyboards.inline.user.catalog.callback_datas import show_products_callback
 from loader import dp
@@ -44,8 +46,8 @@ async def command_processing_catalog(call: CallbackQuery, callback_data: dict, s
                 Order_products.c.product_id == id,
                 Order_products.c.user_telegram_id == call.message.chat.id,
                 Order_products.c.order_id == 0
-                 )
             )
+        )
         flag = conn.execute(flag)
         flag = flag.rowcount
         conn.close()
@@ -57,7 +59,7 @@ async def command_processing_catalog(call: CallbackQuery, callback_data: dict, s
             else:
                 await ShowProduct.quantity.set()
                 await state.update_data(product_info=product_info)
-                await call.message.answer("Сколько штучек? 🥺")
+                await call.message.answer("Сколько штучек? 🥺", reply_markup=cancel_button)
         else:
             await call.message.answer(f"Данный товар уже в корзине 😌")
 
@@ -87,6 +89,12 @@ async def command_processing_catalog(call: CallbackQuery, callback_data: dict, s
                                        category_id=category_id)
 
 
+@dp.message_handler(text="Отмена", state=ShowProduct.quantity)
+async def share_number_func(message: types.Message, state: FSMContext):
+    await message.answer("Хорошо :)", reply_markup=default_menu)
+    await state.finish()
+
+
 @dp.message_handler(state=ShowProduct.quantity)
 async def answer_other(message: types.Message, state: FSMContext):
     quantity_user = message.text
@@ -104,7 +112,9 @@ async def answer_other(message: types.Message, state: FSMContext):
         """
         await state.finish()
         if quantity == 0:
-            await message.reply(f"Этого товара нету в наличии, можете уточнить дату поступления в instagram 😊")
+            await message.reply(f"Этого товара нету в наличии, "
+                                f"можете уточнить дату поступления в instagram 😊",
+                                reply_markup=default_menu)
 
         elif int(quantity_user) <= quantity:
             conn = engine.connect()
@@ -116,9 +126,9 @@ async def answer_other(message: types.Message, state: FSMContext):
                 user_telegram_id=message.chat.id
             )
             conn.execute(ins)
-            await message.reply(f"Добавлено в корзину 🛒")
+            await message.reply(f"Добавлено в корзину 🛒", reply_markup=default_menu)
 
         else:
-            await message.reply(f"На складе есть только {quantity}шт 😥")
+            await message.reply(f"На складе есть только {quantity}шт 😥", reply_markup=default_menu)
     else:
         await message.answer(f"Введите целое число!")

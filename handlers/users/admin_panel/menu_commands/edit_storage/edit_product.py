@@ -3,6 +3,8 @@ from aiogram.types import CallbackQuery
 from sqlalchemy import update
 from aiogram import types
 
+from keyboards.default import admin_menu
+from keyboards.default.cancel import cancel_button
 from keyboards.inline.adminka.edit_storage_buttons.edit_product import edit_product_for_id
 from states.admin_panel.edit_storage.own_value_state import NewValueQuantity, NewValueOther
 from utils.db_api.models import engine, Storage
@@ -35,7 +37,7 @@ async def edit_product_for_id_call(call: CallbackQuery, callback_data: dict, sta
         await edit_product_for_id(product_id, call.message, True)
 
     elif callback_data.get("command") == "own_value":
-        await call.message.answer("Новое количество:")
+        await call.message.answer("Новое количество:", reply_markup=cancel_button)
         await state.update_data(product_id=product_id)
         await bot.delete_message(call.message.chat.id, call.message.message_id)
         await NewValueQuantity.new_value.set()
@@ -56,11 +58,17 @@ async def edit_product_for_id_call(call: CallbackQuery, callback_data: dict, sta
     conn.close()
 
 
+@dp.message_handler(text="Отмена", state=NewValueQuantity.new_value)
+async def share_number_func(message: types.Message, state: FSMContext):
+    await message.answer("Хорошо :)", reply_markup=admin_menu)
+    await state.finish()
+
+
 @dp.message_handler(state=NewValueQuantity.new_value)
 async def answer_quantity(message: types.Message, state: FSMContext):
     quantity = message.text
     if quantity.isdigit():
-        await message.reply("Спс")
+        await message.reply("Спс", reply_markup=admin_menu)
 
         data = await state.get_data()
         product_id = data.get("product_id")
@@ -79,7 +87,6 @@ async def answer_quantity(message: types.Message, state: FSMContext):
 
     else:
         await message.answer(f"Число, мисье:")
-        await NewValueQuantity.new_value.set()
 
 
 @dp.message_handler(state=NewValueOther.new_value_other)

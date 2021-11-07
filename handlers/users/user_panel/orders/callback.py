@@ -17,11 +17,10 @@ async def show_orders_to_user(message):
         Orders.c.id,
         Orders.c.price,
         Orders.c.date,
-        Order_products.c.order_id
-    ]).select_from(Orders.join(Order_products)).where(
+    ]).select_from(Orders).where(
         and_(
             Orders.c.user_telegram_id == message.chat.id,
-            Order_products.c.order_id > 1,
+            Orders.c.price > 0,
         )
     ))
     orders = orders.fetchall()

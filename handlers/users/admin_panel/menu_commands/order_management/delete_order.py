@@ -1,14 +1,15 @@
 from aiogram.dispatcher import FSMContext
-from sqlalchemy import update, delete
+from sqlalchemy import delete
 from aiogram import types
 from loader import dp
 from states.admin_panel.order_management.delete_order_state import DeleteOrderAdmin
-from utils.db_api.models import engine, Orders, Order_products
+from utils.db_api.models import engine, Orders, Order_products, Storage
 
 
 @dp.message_handler(state=DeleteOrderAdmin.delete_for_id)
 async def delete_order_func(message: types.Message, state: FSMContext):
     id_order = message.text
+    await state.finish()
     if id_order.isdigit():
         conn = engine.connect()
 
@@ -35,7 +36,7 @@ async def delete_order_func(message: types.Message, state: FSMContext):
 
             conn.execute(d)
             conn.close()
-            await state.finish()
+
             await message.answer(f"Заказ {id_order} был удалён👌")
     else:
         await message.answer("Введи номер заказа!")

@@ -65,7 +65,6 @@ async def show_ttn_to_user(order_id):
         Orders.c.id,
         Orders.c.price,
         Orders.c.date,
-        Order_products.c.order_id,
         Orders.c.ttn
     ]).select_from(Orders.join(Order_products)).where(
         and_(
