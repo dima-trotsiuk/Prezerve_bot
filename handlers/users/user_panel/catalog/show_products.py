@@ -45,7 +45,7 @@ async def command_processing_catalog(call: CallbackQuery, callback_data: dict, s
             and_(
                 Order_products.c.product_id == id,
                 Order_products.c.user_telegram_id == call.message.chat.id,
-                Order_products.c.order_id == 0
+                Order_products.c.order_id == 1
             )
         )
         flag = conn.execute(flag)
@@ -121,7 +121,7 @@ async def answer_other(message: types.Message, state: FSMContext):
             ins = Order_products.insert().values(
                 category_id=category_id,
                 product_id=product_id,
-                order_id=0,
+                order_id=1,
                 quantity=quantity_user,
                 user_telegram_id=message.chat.id
             )

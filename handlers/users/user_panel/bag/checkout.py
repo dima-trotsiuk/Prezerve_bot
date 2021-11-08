@@ -81,7 +81,7 @@ async def checkout(message):
     conn.execute(update(Order_products).where(
         and_(
             Order_products.c.user_telegram_id == message.chat.id,
-            Order_products.c.order_id == 0
+            Order_products.c.order_id == 1
         )
     ).values(
         order_id=order_id

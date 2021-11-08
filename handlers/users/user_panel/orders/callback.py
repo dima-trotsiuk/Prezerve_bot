@@ -20,7 +20,7 @@ async def show_orders_to_user(message):
     ]).select_from(Orders).where(
         and_(
             Orders.c.user_telegram_id == message.chat.id,
-            Orders.c.price > 0,
+            Orders.c.price > 1,
         )
     ))
     orders = orders.fetchall()

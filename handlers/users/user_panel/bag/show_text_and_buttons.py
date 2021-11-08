@@ -23,7 +23,7 @@ async def show_text_and_buttons(message):
         Order_products.join(Storage)
     ).where(and_(
         Order_products.c.user_telegram_id == message.chat.id,
-        Order_products.c.order_id == 0))
+        Order_products.c.order_id == 1))
     rs = conn.execute(joins)
     products_in_bag = rs.fetchall()
     """

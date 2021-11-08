@@ -18,7 +18,7 @@ async def products_in_bag_func(message):
     ).where(
         and_(
             Order_products.c.user_telegram_id == message.chat.id,
-            Order_products.c.order_id == 0))
+            Order_products.c.order_id == 1))
     rs = conn.execute(joins)
     conn.close()
 
