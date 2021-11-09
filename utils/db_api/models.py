@@ -55,20 +55,5 @@ Order_products = Table('Order_products', metadata,
                        Column('user_telegram_id', String(255), ForeignKey('Users.telegram_id'))
                        )
 
-conn = engine.connect()
-flag = conn.execute(select([Orders]).where(
-    Orders.c.id == 1
-)).fetchone()
-
-if not flag:
-    conn.execute(insert(Orders).values(
-        price=0,
-        platform='instagram',
-        ttn='admin',
-        status='completed',
-        user_telegram_id=config.admins[0],
-    ))
-
-conn.close()
 
 metadata.create_all(engine)  # створення таблиці
