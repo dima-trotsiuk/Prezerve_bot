@@ -109,7 +109,7 @@ async def answer_other(message: types.Message, state: FSMContext):
     if quantity_user.isdigit():
         await state.finish()
         if quantity_user == '0':
-            await message.reply("Серьёзно??")
+            await message.reply("Серьёзно??", reply_markup=default_menu)
         else:
             """
             Если надо сбросить только состояние, воспользуйтесь await state.reset_state(with_data=False)

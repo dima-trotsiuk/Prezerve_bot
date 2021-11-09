@@ -99,7 +99,7 @@ async def answer_other(message: types.Message, state: FSMContext):
     if quantity_user.isdigit():
         await state.finish()
         if quantity_user == '0':
-            await message.reply("Серьёзно??")
+            await message.reply("Серьёзно??", reply_markup=default_menu)
         else:
             product_info_list[1] = int(quantity_user)
 
