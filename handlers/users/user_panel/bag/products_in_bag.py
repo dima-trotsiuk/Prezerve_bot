@@ -1,10 +1,17 @@
 from sqlalchemy import select, and_
 
+from data.config import database
 from utils.db_api.models import engine, Order_products, Storage
 
 
 async def products_in_bag_func(message):
+    print(f"{database['type']}+pymysql://"
+          f"{database['username']}:"
+          f"{database['password']}@"
+          f"{database['host']}/"
+          f"{database['database_name']}?charset=utf8mb4")
     conn = engine.connect()
+
     joins = select([
         Order_products.c.id,
         Order_products.c.quantity,
