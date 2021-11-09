@@ -107,28 +107,32 @@ async def answer_other(message: types.Message, state: FSMContext):
     category_id = product_info[4]
 
     if quantity_user.isdigit():
-        """
-        Если надо сбросить только состояние, воспользуйтесь await state.reset_state(with_data=False)
-        """
         await state.finish()
-        if quantity == 0:
-            await message.reply(f"Этого товара нету в наличии, "
-                                f"можете уточнить дату поступления в instagram 😊",
-                                reply_markup=default_menu)
-
-        elif int(quantity_user) <= quantity:
-            conn = engine.connect()
-            ins = Order_products.insert().values(
-                category_id=category_id,
-                product_id=product_id,
-                order_id=1,
-                quantity=quantity_user,
-                user_telegram_id=message.chat.id
-            )
-            conn.execute(ins)
-            await message.reply(f"Добавлено в корзину 🛒", reply_markup=default_menu)
-
+        if quantity_user == '0':
+            await message.reply("Серьёзно??")
         else:
-            await message.reply(f"На складе есть только {quantity}шт 😥", reply_markup=default_menu)
+            """
+            Если надо сбросить только состояние, воспользуйтесь await state.reset_state(with_data=False)
+            """
+
+            if quantity == 0:
+                await message.reply(f"Этого товара нету в наличии, "
+                                    f"можете уточнить дату поступления в instagram 😊",
+                                    reply_markup=default_menu)
+
+            elif int(quantity_user) <= quantity:
+                conn = engine.connect()
+                ins = Order_products.insert().values(
+                    category_id=category_id,
+                    product_id=product_id,
+                    order_id=1,
+                    quantity=quantity_user,
+                    user_telegram_id=message.chat.id
+                )
+                conn.execute(ins)
+                await message.reply(f"Добавлено в корзину 🛒", reply_markup=default_menu)
+
+            else:
+                await message.reply(f"На складе есть только {quantity}шт 😥", reply_markup=default_menu)
     else:
         await message.answer(f"Введите целое число!")

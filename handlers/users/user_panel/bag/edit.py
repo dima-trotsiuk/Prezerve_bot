@@ -97,29 +97,29 @@ async def answer_other(message: types.Message, state: FSMContext):
     product_info_list = list(product_info)
 
     if quantity_user.isdigit():
-        product_info_list[1] = int(quantity_user)
-        """
-        Если надо сбросить только состояние, воспользуйтесь await state.reset_state(with_data=False)
-        """
-        await state.reset_state(with_data=False)
-
-        if int(quantity_user) <= quantity:
-            conn = engine.connect()
-            conn.execute(Order_products.update().values(
-                quantity=quantity_user,
-            ).where(Order_products.c.id == product_order_id))
-
-            await edit_products_in_bag_func(message=message_post,
-                                            index_product=index_product,
-                                            update=True)
-            await message.reply("Оновлено 👌", reply_markup=default_menu)
-
-            # оновляем инфу
-            products_in_bag = await products_in_bag_func(message)
-
-            await state.update_data(products_in_bag=products_in_bag)
-
+        await state.finish()
+        if quantity_user == '0':
+            await message.reply("Серьёзно??")
         else:
-            await message.reply(f"На складе есть только {quantity}шт 😥", reply_markup=default_menu)
+            product_info_list[1] = int(quantity_user)
+
+            if int(quantity_user) <= quantity:
+                conn = engine.connect()
+                conn.execute(Order_products.update().values(
+                    quantity=quantity_user,
+                ).where(Order_products.c.id == product_order_id))
+
+                await edit_products_in_bag_func(message=message_post,
+                                                index_product=index_product,
+                                                update=True)
+                await message.reply("Оновлено 👌", reply_markup=default_menu)
+
+                # оновляем инфу
+                products_in_bag = await products_in_bag_func(message)
+
+                await state.update_data(products_in_bag=products_in_bag)
+
+            else:
+                await message.reply(f"На складе есть только {quantity}шт 😥", reply_markup=default_menu)
     else:
         await message.answer(f"Введите целое число!")
