@@ -49,31 +49,26 @@ async def delete_order_func(message: types.Message, state: FSMContext):
 
             joins = select([
                 Order_products.c.quantity,
-                Storage.c.price,
                 Storage.c.title,
             ]).select_from(
                 Order_products.join(Storage)
             ).where(Order_products.c.order_id == order_id)
             rs = conn.execute(joins)  # [(50, 12, 'Лучші')]
-
+            conn.close()
             list_products = rs.fetchall()
 
-            '''
-            Выводим данные о заказе админу
-            '''
-
-            result = f"{date}\n" \
-                     f"Заказ №{order_id} ({platform})\n" \
-                     f"ТТН {ttn}\n"
+            result = f"<i>{date}</i>\n" \
+                     f"<b>Заказ №{order_id}</b> <i>({platform})</i>\n\n" \
+                     f"ТТН <i>{ttn}</i>\n"
 
             for into in list_products:
                 quantity = into[0]
-                price = into[1]
-                title = into[2]
+                title = into[1]
 
-                result += f"{title} - {quantity}шт ({price}грн)\n"
+                result += f"{title}\n" \
+                          f"<b>Количество: {quantity}шт</b>\n\n"
 
-            result += f"= {full_price} грн"
+            result += f"= <b>{full_price} грн</b>"
 
             await message.answer(result)
         conn.close()

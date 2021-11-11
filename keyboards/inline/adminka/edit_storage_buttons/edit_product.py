@@ -59,11 +59,6 @@ async def edit_product_for_id(product_id, message, update=False):
     edit_product_for_id_key = InlineKeyboardMarkup(row_width=1, inline_keyboard=list_button)
 
     if update:
-        '''
-        # старый способ
-        photo_bytes = InputFile(path_or_bytesio=f"photos/{photo}.jpg")
-        '''
-
         file = InputMediaPhoto(media=photo,
                                caption=
                                f'{content}\n'
@@ -72,7 +67,6 @@ async def edit_product_for_id(product_id, message, update=False):
 
         await message.edit_media(file, reply_markup=edit_product_for_id_key)
     else:
-
         await bot.send_photo(
             chat_id=message.chat.id,
             photo=photo,

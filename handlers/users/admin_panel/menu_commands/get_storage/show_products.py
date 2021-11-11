@@ -8,6 +8,6 @@ async def get_storage_func(message: types.Message):
     products = select_storage_func(category=0)
     full_storage = ''
     for product in products:
-        full_storage += f'{product[0]:02}. "{product[1]}" - {product[3]}шт ({product[5]}грн)\n'
-    await message.answer("Склад:\n"
+        full_storage += f'{product[0]}. {product[1]}\nКоличество: <b>{product[3]}</b>шт Цена: <b>{product[5]}</b>грн\n\n'
+    await message.answer("<i>Склад:</i>\n"
                          f"{full_storage}")

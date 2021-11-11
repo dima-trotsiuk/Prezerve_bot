@@ -1,9 +1,17 @@
 from aiogram.dispatcher import FSMContext
 from sqlalchemy import delete
 from aiogram import types
+
+from keyboards.default import admin_menu
 from loader import dp
 from states.admin_panel.order_management.delete_order_state import DeleteOrderAdmin
-from utils.db_api.models import engine, Orders, Order_products, Storage
+from utils.db_api.models import engine, Orders, Order_products
+
+
+@dp.message_handler(text="Отмена", state=DeleteOrderAdmin.delete_for_id)
+async def share_number_func(message: types.Message, state: FSMContext):
+    await message.answer("Хорошо :)", reply_markup=admin_menu)
+    await state.finish()
 
 
 @dp.message_handler(state=DeleteOrderAdmin.delete_for_id)

@@ -18,6 +18,7 @@ async def get_storage_func(message: types.Message):
 @dp.callback_query_handler(select_products_callback.filter(type_command="edit_storage_admin"))
 async def order_managment_admin_call(call: CallbackQuery, callback_data: dict):
     await call.answer()
+
     if callback_data.get("id") == "new_product":
         await call.message.answer("Категория?", reply_markup=await new_product_select_func(switch="new_product"))
     else:

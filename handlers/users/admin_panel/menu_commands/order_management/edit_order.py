@@ -2,9 +2,16 @@ from aiogram.dispatcher import FSMContext
 from aiogram import types
 from sqlalchemy import select, delete
 
+from keyboards.default import admin_menu
 from loader import dp
 from states.admin_panel.order_management.edit_order_state import EditOrderAdmin
 from utils.db_api.models import engine, Orders, Order_products, Storage
+
+
+@dp.message_handler(text="Отмена", state=EditOrderAdmin.edit_for_id)
+async def share_number_func(message: types.Message, state: FSMContext):
+    await message.answer("Хорошо :)", reply_markup=admin_menu)
+    await state.finish()
 
 
 @dp.message_handler(state=EditOrderAdmin.edit_for_id)
@@ -73,7 +80,6 @@ async def show_order(message, id_order):
 
     joins = select([
         Order_products.c.quantity,
-        Storage.c.price,
         Storage.c.title,
     ]).select_from(
         Order_products.join(Storage)
@@ -86,18 +92,18 @@ async def show_order(message, id_order):
     Выводим данные о заказе админу
     '''
 
-    result = f"{date}\n" \
-             f"Заказ №{order_id} ({platform})\n" \
-             f"ТТН {ttn}\n"
+    result = f"<i>{date}</i>\n" \
+             f"<b>Заказ №{order_id}</b> <i>({platform})</i>\n\n" \
+             f"ТТН <i>{ttn}</i>\n"
 
     for into in list_products:
         quantity = into[0]
-        price = into[1]
-        title = into[2]
+        title = into[1]
 
-        result += f"{title} - {quantity}шт ({price}грн)\n"
+        result += f"{title}\n" \
+                  f"<b>Количество: {quantity}шт</b>\n\n"
 
-    result += f"= {full_price} грн"
+    result += f"= <b>{full_price} грн</b>"
 
     await message.answer(result)
 

@@ -46,7 +46,7 @@ async def edit_product_for_id_call(call: CallbackQuery, callback_data: dict, sta
         await call.message.answer(f"1. Изменить заголовок\n"
                                   f"2. Изменить описание\n"
                                   f"3. Изменить фото\n"
-                                  f"4. Изменить цену\n")
+                                  f"4. Изменить цену\n", reply_markup=cancel_button)
 
         await state.update_data(product_id=product_id)
         await NewValueOther.new_value_other.set()
@@ -59,6 +59,12 @@ async def edit_product_for_id_call(call: CallbackQuery, callback_data: dict, sta
 
 
 @dp.message_handler(text="Отмена", state=NewValueQuantity.new_value)
+async def share_number_func(message: types.Message, state: FSMContext):
+    await message.answer("Хорошо :)", reply_markup=admin_menu)
+    await state.finish()
+
+
+@dp.message_handler(text="Отмена", state=NewValueOther.new_value_other)
 async def share_number_func(message: types.Message, state: FSMContext):
     await message.answer("Хорошо :)", reply_markup=admin_menu)
     await state.finish()
@@ -105,7 +111,16 @@ async def answer_other(message: types.Message, state: FSMContext):
     elif switch == "4":
         await message.answer("Новая цена:")
         await state.update_data(command="new_price")
-    await NewValueOther.info.set()
+    if switch in ("1", "2", "3", "4", "5"):
+        await NewValueOther.info.set()
+    else:
+        await message.answer("Не знаю, что ты хочешь")
+
+
+@dp.message_handler(text="Отмена", state=NewValueOther.info)
+async def share_number_func(message: types.Message, state: FSMContext):
+    await message.answer("Хорошо :)", reply_markup=admin_menu)
+    await state.finish()
 
 
 @dp.message_handler(state=NewValueOther.info, content_types=['photo', 'text'])
@@ -134,20 +149,7 @@ async def answer_q1(message: types.Message, state: FSMContext):
         )
         conn.execute(update_content)
     elif command == "new_photo":
-        """
-        # старый способ
-        # удаляем старую фотку
-        path = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..', 'photos', f'{photo_url}.jpg'))
 
-        os.remove(path)
-
-        # сохраняем новую фотку
-        file_info = await bot.get_file(document_id)
-        fi = file_info.file_path
-        urllib.request.urlretrieve(f'https://api.telegram.org/file/bot{str(os.getenv("BOT_TOKEN"))}/{fi}',
-                                   f'photos/{document_id}.jpg')
-        """
         # перезаписываем в бд
         document_id = message.photo[-1].file_id
         update_photo = update(Storage).where(

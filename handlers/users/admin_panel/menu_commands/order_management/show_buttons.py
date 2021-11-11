@@ -4,6 +4,7 @@ from aiogram.types import CallbackQuery
 
 from handlers.users.admin_panel.menu_commands.order_management.send_orders import send_orders_func
 from handlers.users.admin_panel.menu_commands.order_management.show_orders import show_orders_func
+from keyboards.default.cancel import cancel_button
 from keyboards.inline.adminka.globals.select_category import new_product_select_func
 from keyboards.inline.adminka.order_management_buttons.callback_datas import order_management_callback
 from keyboards.inline.adminka.order_management_buttons.order_managment_buttons import order_management
@@ -30,7 +31,7 @@ async def order_managment_admin_call(call: CallbackQuery, callback_data: dict):
         await send_orders_func(call.message)
     elif command == "delete":
         await DeleteOrderAdmin.delete_for_id.set()
-        await call.message.answer("Номер заказа?")
+        await call.message.answer("Номер заказа?", reply_markup=cancel_button)
     elif command == "edit":
         await EditOrderAdmin.edit_for_id.set()
-        await call.message.answer("Номер заказа?")
+        await call.message.answer("Номер заказа?", reply_markup=cancel_button)
