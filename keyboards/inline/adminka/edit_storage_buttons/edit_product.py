@@ -61,9 +61,9 @@ async def edit_product_for_id(product_id, message, update=False):
     if update:
         file = InputMediaPhoto(media=photo,
                                caption=
-                               f'{content}\n'
-                               f'{quantity}шт\n'
-                               f'{price}грн')
+                               f'{content}\n\n'
+                               f'Количество: <b>{quantity}</b>шт\n'
+                               f'Цена: <b>{price}</b>грн')
 
         await message.edit_media(file, reply_markup=edit_product_for_id_key)
     else:
@@ -72,7 +72,6 @@ async def edit_product_for_id(product_id, message, update=False):
             photo=photo,
             reply_markup=edit_product_for_id_key,
             caption=
-            f'{content}\n'
-            f'{quantity}шт\n'
-            f'{price}грн',
-        )
+            f'{content}\n\n'
+            f'Количество: <b>{quantity}</b>шт\n'
+            f'Цена: <b>{price}</b>грн')
