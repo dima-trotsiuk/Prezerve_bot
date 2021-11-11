@@ -28,7 +28,7 @@ async def delete_order_func(message: types.Message, state: FSMContext):
         flag = flag.rowcount
 
         if flag == 0:
-            await message.answer("Данного заказа не существует")
+            await message.answer("Данного заказа не существует", reply_markup=admin_menu)
             await state.finish()
         else:
 
@@ -45,7 +45,7 @@ async def delete_order_func(message: types.Message, state: FSMContext):
             conn.execute(d)
             conn.close()
 
-            await message.answer(f"Заказ {id_order} был удалён👌")
+            await message.answer(f"Заказ {id_order} был удалён👌", reply_markup=admin_menu)
     else:
         await message.answer("Введи номер заказа!")
         await state.finish()

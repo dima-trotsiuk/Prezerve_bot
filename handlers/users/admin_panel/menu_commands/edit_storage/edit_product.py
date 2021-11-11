@@ -100,16 +100,16 @@ async def answer_other(message: types.Message, state: FSMContext):
     switch = message.text
 
     if switch == "1":
-        await message.answer("Новый заголовок:")
+        await message.answer("Новый заголовок:", reply_markup=admin_menu)
         await state.update_data(command="new_title")
     elif switch == "2":
-        await message.answer("Новое описание:")
+        await message.answer("Новое описание:", reply_markup=admin_menu)
         await state.update_data(command="new_content")
     elif switch == "3":
-        await message.answer("Новое фото:")
+        await message.answer("Новое фото:", reply_markup=admin_menu)
         await state.update_data(command="new_photo")
     elif switch == "4":
-        await message.answer("Новая цена:")
+        await message.answer("Новая цена:", reply_markup=admin_menu)
         await state.update_data(command="new_price")
     if switch in ("1", "2", "3", "4", "5"):
         await NewValueOther.info.set()
