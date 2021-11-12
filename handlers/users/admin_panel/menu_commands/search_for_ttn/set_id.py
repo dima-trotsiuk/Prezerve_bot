@@ -71,5 +71,5 @@ async def delete_order_func(message: types.Message, state: FSMContext):
             result += f"= <b>{full_price} грн</b>"
 
             await message.answer(result)
-        conn.close()
+    conn.close()
     await state.finish()

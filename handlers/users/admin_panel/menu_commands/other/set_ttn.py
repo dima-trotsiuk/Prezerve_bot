@@ -95,7 +95,7 @@ async def show_ttn_to_user(order_id):
         Order_products.c.order_id == order_id))
     joins = conn.execute(joins)
     joins = joins.fetchall()
-
+    conn.close()
     for el in joins:
         title_product = el[4]
         quantity_in_order = el[3]

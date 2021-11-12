@@ -130,6 +130,7 @@ async def answer_other(message: types.Message, state: FSMContext):
                     user_telegram_id=message.chat.id
                 )
                 conn.execute(ins)
+                conn.close()
                 await message.reply(f"Добавлено в корзину 🛒", reply_markup=default_menu)
 
             else:

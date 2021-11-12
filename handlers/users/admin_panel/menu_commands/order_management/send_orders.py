@@ -21,4 +21,4 @@ async def send_orders_func(message):
 
         await message.answer(f"Все заказы ({flag}) обработаны👍")
 
-        conn.close()
+    conn.close()

@@ -108,6 +108,7 @@ async def answer_other(message: types.Message, state: FSMContext):
                 conn.execute(Order_products.update().values(
                     quantity=quantity_user,
                 ).where(Order_products.c.id == product_order_id))
+                conn.close()
 
                 await edit_products_in_bag_func(message=message_post,
                                                 index_product=index_product,

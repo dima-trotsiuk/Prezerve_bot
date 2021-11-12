@@ -61,4 +61,4 @@ async def show_orders_func(message):
             result += f"= <b>{full_price} грн</b>"
 
             await message.answer(result)
-        conn.close()
+    conn.close()

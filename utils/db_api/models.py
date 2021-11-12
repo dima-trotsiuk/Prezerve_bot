@@ -1,9 +1,7 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Text, DateTime, \
-    ForeignKey, UnicodeText, Enum, insert, update
-from sqlalchemy.sql import select
+    ForeignKey, UnicodeText, Enum
 from datetime import datetime
 
-from data import config
 from data.config import database
 
 engine = create_engine(

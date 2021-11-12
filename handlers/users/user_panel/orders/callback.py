@@ -60,3 +60,4 @@ async def show_orders_to_user(message):
                 text += f"\n{quantity_in_order}шт * {price}грн = {price_product}грн\n\n"
             text += f"\n<b>Итого: {full_price}грн</b>"
             await message.answer(text)
+    conn.finish()

@@ -209,9 +209,10 @@ async def price_set(message):
             Orders.c.id == order_id
         ).values(price=sum)
         conn.execute(u)
-        conn.close()
+
         await AddOrderAdmin.set_ttn.set()
         await message.answer("Жду ТТН:")
+    conn.close()
 
 
 @dp.message_handler(state=AddOrderAdmin.set_ttn)
