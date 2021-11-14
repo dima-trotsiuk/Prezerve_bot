@@ -51,7 +51,7 @@ async def answer_other(message: types.Message, state: FSMContext):
     if switch == "1":
         await delete_order(message, state)
     elif switch == "2":
-        await message.answer("В разработке")
+        await message.answer("В разработке", reply_markup=admin_menu)
 
     await state.finish()
 
@@ -126,4 +126,4 @@ async def delete_order(message, state: FSMContext):
             Orders.c.id == id_order
         ))
     conn.close()
-    await message.answer("Заказ был удалён😇")
+    await message.answer("Заказ был удалён😇", reply_markup=admin_menu)
