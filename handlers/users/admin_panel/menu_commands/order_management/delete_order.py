@@ -30,6 +30,7 @@ async def delete_order_func(message: types.Message, state: FSMContext):
         if flag == 0:
             await message.answer("Данного заказа не существует", reply_markup=admin_menu)
             await state.finish()
+            conn.close()
         else:
 
             d = delete(Order_products).where(

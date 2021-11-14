@@ -26,6 +26,7 @@ async def show_text_and_buttons(message):
         Order_products.c.order_id == 1))
     rs = conn.execute(joins)
     products_in_bag = rs.fetchall()
+    conn.close()
     """
     id_order_products = [0]
     category_id = [1]
@@ -76,5 +77,3 @@ async def show_text_and_buttons(message):
 
     text += f"\n<b>Итого: {sum_price}грн</b>"
     await message.answer(text, reply_markup=show_buttons_bag)
-
-    conn.close()

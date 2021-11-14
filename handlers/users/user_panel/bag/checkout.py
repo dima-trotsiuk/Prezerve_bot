@@ -26,7 +26,7 @@ async def validation(message):
             break
     if flag:
         await message.answer("Поделитесь с нами вашем номером телефона, чтобы мы могли связатся с вами. "
-                             "Или напишите его ниже в формате +380661112233", reply_markup=get_contact_keyboard)
+                             "Или напишите его ниже в формате 380661112233", reply_markup=get_contact_keyboard)
         await GetNumber.number.set()
 
 
@@ -59,7 +59,7 @@ async def button_content(message: types.Message, state: FSMContext):
 @dp.message_handler(state=GetNumber.number)
 async def manual_input(message: types.Message, state: FSMContext):
     text = message.text
-    if len(text) == 13:
+    if len(text) == 12:
         await writing_number_to_database(message=message, number=text)
         await state.finish()
     else:
@@ -146,10 +146,11 @@ async def checkout(message):
     conn.execute(update(Orders).where(Orders.c.id == order_id).values(
         price=sum_price
     ))
+    conn.close()
     text += f"\n<b>Итого: {sum_price}грн</b>"
     await message.answer(text, reply_markup=default_menu)
     await sending_to_admin(message, order_id)
-    conn.close()
+
 
 
 async def sending_to_admin(message, order_id):

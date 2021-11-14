@@ -54,7 +54,7 @@ async def delete_order_func(message: types.Message, state: FSMContext):
                 Order_products.join(Storage)
             ).where(Order_products.c.order_id == order_id)
             rs = conn.execute(joins)  # [(50, 12, 'Лучші')]
-            conn.close()
+
             list_products = rs.fetchall()
 
             result = f"<i>{date}</i>\n" \
