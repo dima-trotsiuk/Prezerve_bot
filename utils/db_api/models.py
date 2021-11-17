@@ -9,7 +9,10 @@ engine = create_engine(
     f"{database['username']}:"
     f"{database['password']}@"
     f"{database['host']}/"
-    f"{database['database_name']}?charset=utf8mb4")
+    f"{database['database_name']}?charset=utf8mb4",
+    pool_pre_ping=True,
+    pool_recycle=3600
+)
 
 metadata = MetaData()
 
