@@ -1,8 +1,8 @@
 from aiogram import types
 from sqlalchemy import select, and_
-
 from loader import dp
 from utils.db_api.models import engine, Orders, Order_products, Storage
+from data import config
 
 
 @dp.message_handler(text="Заказы 📜")
@@ -13,16 +13,28 @@ async def get_storage_func(message: types.Message):
 async def show_orders_to_user(message):
     conn = engine.connect()
 
-    orders = conn.execute(select([
-        Orders.c.id,
-        Orders.c.price,
-        Orders.c.date,
-    ]).select_from(Orders).where(
-        and_(
-            Orders.c.user_telegram_id == message.chat.id,
-            Orders.c.price > 1,
-        )
-    ))
+    if message.chat.id in config.admins:
+        orders = conn.execute(select([
+            Orders.c.id,
+            Orders.c.price,
+            Orders.c.date,
+        ]).select_from(Orders).where(
+            and_(
+                Orders.c.status == 'processing',
+                Orders.c.price > 1,
+            )
+        ))
+    else:
+        orders = conn.execute(select([
+            Orders.c.id,
+            Orders.c.price,
+            Orders.c.date,
+        ]).select_from(Orders).where(
+            and_(
+                Orders.c.user_telegram_id == message.chat.id,
+                Orders.c.price > 1,
+            )
+        ))
     orders = orders.fetchall()
 
     if not orders:
