@@ -188,9 +188,13 @@ async def sending_to_admin(message, order_id):
     '''
     Ищем номер телефона
     '''
-    number = conn.execute(select([
-        Users.c.number
-    ]).where(Users.c.telegram_id == message.chat.id)).first()[0]
+    number_username = conn.execute(select([
+        Users.c.number,
+        Users.c.username
+    ]).where(Users.c.telegram_id == message.chat.id))
+
+    number = number_username.first()[0]
+    username = number_username.first()[1]
     conn.close()
 
     '''
@@ -199,7 +203,8 @@ async def sending_to_admin(message, order_id):
 
     result = f"<b>Заказ №{order_id}</b>\n\n" \
              f"<b>Дата - </b><i>{date}</i>\n" \
-             f"<b>Номер телефона </b><i>{number}</i>\n\n"
+             f"<b>Номер телефона </b><i>{number}</i>\n\n" \
+             f"<b>Юзернейм </b><i>{username}</i>\n\n"
 
     for into in list_products:
         quantity = into[0]
