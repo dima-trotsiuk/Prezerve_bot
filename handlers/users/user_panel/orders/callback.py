@@ -47,19 +47,32 @@ async def show_orders_to_user(message):
             text = f"<b>Заказ № {order_id}</b>\n\n"
             text += f"<b>Дата - </b><i>{date}\n\n</i>"
 
-            joins = select([
-                Order_products.c.id,
-                Order_products.c.category_id,
-                Order_products.c.product_id,
-                Order_products.c.quantity,
-                Storage.c.title,
-                Storage.c.quantity,
-                Storage.c.price,
-            ]).select_from(
-                Order_products.join(Storage)
-            ).where(and_(
-                Order_products.c.user_telegram_id == message.chat.id,
-                Order_products.c.order_id == order_id))
+            if message.chat.id in config.admins:
+                joins = select([
+                    Order_products.c.id,
+                    Order_products.c.category_id,
+                    Order_products.c.product_id,
+                    Order_products.c.quantity,
+                    Storage.c.title,
+                    Storage.c.quantity,
+                    Storage.c.price,
+                ]).select_from(
+                    Order_products.join(Storage)
+                ).where(Order_products.c.order_id == order_id)
+            else:
+                joins = select([
+                    Order_products.c.id,
+                    Order_products.c.category_id,
+                    Order_products.c.product_id,
+                    Order_products.c.quantity,
+                    Storage.c.title,
+                    Storage.c.quantity,
+                    Storage.c.price,
+                ]).select_from(
+                    Order_products.join(Storage)
+                ).where(and_(
+                    Order_products.c.user_telegram_id == message.chat.id,
+                    Order_products.c.order_id == order_id))
             joins = conn.execute(joins)
             joins = joins.fetchall()
 
