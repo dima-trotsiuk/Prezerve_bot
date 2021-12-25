@@ -26,7 +26,7 @@ async def validation(message):
             break
     if flag:
         await message.answer("Поделитесь с нами вашем номером телефона, чтобы мы могли связатся с вами. "
-                             "Или напишите его ниже в формате 380661112233", reply_markup=get_contact_keyboard)
+                             "Или напишите его ниже в формате +380661112233", reply_markup=get_contact_keyboard)
         await GetNumber.number.set()
 
 
@@ -51,15 +51,14 @@ async def share_number_func(message: types.Message, state: FSMContext):
 @dp.message_handler(content_types=["contact"], state=GetNumber.number)
 async def button_content(message: types.Message, state: FSMContext):
     text = message.contact.phone_number
-
-    await writing_number_to_database(message=message, number=text)
     await state.finish()
+    await writing_number_to_database(message=message, number=text)
 
 
 @dp.message_handler(state=GetNumber.number)
 async def manual_input(message: types.Message, state: FSMContext):
     text = message.text
-    if len(text) == 12:
+    if len(text) == 13:
         await writing_number_to_database(message=message, number=text)
         await state.finish()
     else:
@@ -152,7 +151,6 @@ async def checkout(message):
     await sending_to_admin(message, order_id)
 
 
-
 async def sending_to_admin(message, order_id):
     conn = engine.connect()
 
@@ -191,10 +189,12 @@ async def sending_to_admin(message, order_id):
     number_username = conn.execute(select([
         Users.c.number,
         Users.c.username
-    ]).where(Users.c.telegram_id == message.chat.id))
+    ]).where(Users.c.telegram_id == message.chat.id)).first()
 
-    number = number_username.first()[0]
-    username = number_username.first()[1]
+    print(number_username)
+
+    number = number_username[0]
+    username = number_username[1]
     conn.close()
 
     '''
@@ -203,8 +203,8 @@ async def sending_to_admin(message, order_id):
 
     result = f"<b>Заказ №{order_id}</b>\n\n" \
              f"<b>Дата - </b><i>{date}</i>\n" \
-             f"<b>Номер телефона </b><i>{number}</i>\n\n" \
-             f"<b>Юзернейм </b><i>{username}</i>\n\n"
+             f"<b>Номер телефона </b><i>{number}</i>\n" \
+             f"<b>Юзернейм - </b><i>@{username}</i>\n\n"
 
     for into in list_products:
         quantity = into[0]
